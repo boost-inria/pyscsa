@@ -78,6 +78,13 @@ class AdaptiveSCSA:
                 self.scsa1d.gmma = gmma
             else:
                 self.scsa2d.gmma = gmma
+
+        # Ensure signal is positive for SCSA
+        min_signal = None
+        if signal.min() < 0:
+            min_signal = signal.min()
+            signal = signal - min_signal
+        signal = signal.flatten()
         
         # Process based on dimensionality
         if signal.ndim == 1:
@@ -177,6 +184,13 @@ class MultiScaleSCSA:
         np.ndarray
             Reconstructed signal
         """
+        # Ensure signal is positive for SCSA
+        min_signal = None
+        if signal.min() < 0:
+            min_signal = signal.min()
+            signal = signal - min_signal
+        signal = signal.flatten()
+        
         components = self.decompose(signal)
         
         if weights is None:
@@ -239,6 +253,13 @@ class RobustSCSA:
         SCSAResult
             Denoising result
         """
+        # Ensure signal is positive for SCSA
+        min_signal = None
+        if signal.min() < 0:
+            min_signal = signal.min()
+            signal = signal - min_signal
+        signal = signal.flatten()
+        
         if handle_outliers:
             # Detect and replace outliers
             outlier_mask = self.detect_outliers(signal)
