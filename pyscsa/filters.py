@@ -73,7 +73,7 @@ class AdaptiveSCSA:
         """
         # Adapt gamma if requested
         if adapt_gmma:
-            gamma = self.adapt_gmma(signal)
+            gmma = adapt_gmma
             if signal.ndim == 1:
                 self.scsa1d.gmma = gmma
             else:
