@@ -1,0 +1,41 @@
+Theoretical Background
+======================
+
+Overview
+--------
+
+Semi-Classical Signal Analysis (SCSA) is a signal processing method inspired by 
+quantum mechanics. It treats signals as "potentials" and uses eigenvalue decomposition 
+of associated differential operators for reconstruction and denoising.
+
+Mathematical Foundation
+-----------------------
+
+For a 1D signal V(x), SCSA constructs the operator:
+
+.. math::
+
+   \mathcal{L} = -\gamma^2 \frac{d^2}{dx^2} + V(x)
+
+where γ is the semi-classical parameter controlling smoothness.
+
+Key Parameters
+--------------
+
+Gamma Parameter
+~~~~~~~~~~~~~~~
+
+The parameter γ controls smoothing:
+
+* Small γ (< 1): More smoothing
+* Large γ (> 1): Less smoothing, preserves details
+
+Cutoff Parameter h
+~~~~~~~~~~~~~~~~~~
+
+The cutoff h determines reconstruction quality:
+
+* Small h: More smoothing
+* Large h: Less smoothing
+
+Use ``filter_with_optimal_h()`` for automatic optimization.

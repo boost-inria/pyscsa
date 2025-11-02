@@ -1,0 +1,70 @@
+Examples
+========
+
+1D Signal Processing
+------------------------------
+
+Parameter Analysis
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from pyscsa import SCSA1D
+   import numpy as np
+   import matplotlib.pyplot as plt
+   
+   # Generate signal
+   x = np.linspace(-10, 10, 300)
+   signal = np.exp(-x**2)
+   noisy = signal + 0.1 * np.random.randn(len(signal))
+   
+   # Sweep gamma values
+   gammas = np.linspace(0.1, 5.0, 20)
+   mse_values = []
+   psnr_values = []
+   
+   for gmma in gammas:
+       scsa = SCSA1D(gmma=gmma)
+       result = scsa.reconstruct(np.abs(noisy), h=1.0)
+       mse_values.append(result.metrics['mse'])
+       psnr_values.append(result.metrics['psnr'])
+   
+   # Plot results
+   fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+   axes[0].plot(gammas, mse_values, 'o-')
+   axes[0].set_xlabel('Gamma')
+   axes[0].set_ylabel('MSE')
+   axes[1].plot(gammas, psnr_values, 'o-')
+   axes[1].set_xlabel('Gamma')
+   axes[1].set_ylabel('PSNR (dB)')
+   plt.show()
+
+2D Image Processing
+-----------------------------
+
+Image Processing
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+
+   from pyscsa import SCSA2D
+   import numpy as np
+   
+   # Create large image
+   size = 256
+   x = np.linspace(-10, 10, size)
+   y = np.linspace(-10, 10, size)
+   X, Y = np.meshgrid(x, y)
+   image = np.exp(-(X**2 + Y**2) / 10)
+   
+   # Add noise
+   noisy_image = image + 0.1 * np.random.randn(*image.shape)
+   
+   # Process with windowed approach
+   scsa = SCSA2D(gmma=2.0)
+   denoised = scsa.denoise(
+       noisy_image,
+       method='windowed',
+       window_size=16,
+       h=5.0
+   )
