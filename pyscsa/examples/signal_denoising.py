@@ -20,15 +20,21 @@ def example_basic_denoising():
     x = np.linspace(-10, 10, 500)
     signal = SignalGenerator.sech_squared(x, center=0, width=1)
     
+    # Ensure signal is positive for SCSA
+    min_signal = None
+    if signal.min() < 0:
+        min_signal = signal.min()
+        signal = signal - min_signal
+    signal = signal.flatten()
     # Add noise
     noisy = add_noise(signal, snr_db=20, seed=42)
     
     # Denoise
-    scsa = SCSA1D(gamma=0.5)
-    result = scsa.filter_with_optimal_h(np.abs(noisy))
+    scsa = SCSA1D(gmma=0.5)
+    result = scsa.filter_with_optimal_h(noisy, curvature_weight = 2.0,h_range = [0.2,5])
     
     # Compute metrics
-    metrics = QualityMetrics.compute_all(np.abs(signal), result.reconstructed)
+    metrics = QualityMetrics.compute_all(signal, result.reconstructed)
     
     print(f"\nOptimal h: {result.optimal_h:.3f}")
     print(f"Number of eigenvalues: {result.num_eigenvalues}")
@@ -41,7 +47,7 @@ def example_basic_denoising():
     fig = viz.plot_1d_comparison(
         np.abs(signal), 
         result.reconstructed, 
-        np.abs(noisy),
+        noisy,
         title="SCSA Denoising - Sech-squared Signal",
         x_axis=x,
         metrics=result.metrics
@@ -65,6 +71,12 @@ def example_multi_noise_comparison():
         amplitudes=[1, 2, 1.5],
         widths=[0.5, 0.3, 0.4]
     )
+    # Ensure signal is positive for SCSA
+    min_signal = None
+    if signal.min() < 0:
+        min_signal = signal.min()
+        signal = signal - min_signal
+    signal = signal.flatten()
     
     # Different noise types
     noise_types = {
@@ -76,11 +88,11 @@ def example_multi_noise_comparison():
     
     # Process each noise type
     results = {}
-    scsa = SCSA1D(gamma=0.5)
+    scsa = SCSA1D(gmma=2)
     
     for noise_name, noise in noise_types.items():
         noisy = signal + noise
-        result = scsa.filter_with_optimal_h(np.abs(noisy))
+        result = scsa.filter_with_optimal_h(noisy, curvature_weight = 2.0,h_range = [0.2,5])
         metrics = QualityMetrics.compute_all(signal, result.reconstructed)
         results[noise_name] = {
             'result': result,
@@ -113,7 +125,12 @@ def example_parameter_optimization():
     signal = (20 + 30 * np.sin(2 * np.pi * x / 30) +
               10 * np.sin(2 * np.pi * x / 10) +
               5 * np.sin(2 * np.pi * x / 5))
-    
+    # Ensure signal is positive for SCSA
+    min_signal = None
+    if signal.min() < 0:
+        min_signal = signal.min()
+        signal = signal - min_signal
+    signal = signal.flatten()
     # Add noise
     noisy = add_noise(signal, snr_db=15, seed=42)
     
@@ -121,15 +138,15 @@ def example_parameter_optimization():
     gammas = [0.1, 0.3, 0.5, 0.7, 1.0, 1.5, 2.0]
     results = {}
     
-    for gamma in gammas:
-        scsa = SCSA1D(gamma=gamma)
-        result = scsa.filter_with_optimal_h(np.abs(noisy))
-        results[gamma] = {
+    for gmma in gammas:
+        scsa = SCSA1D(gmma=gmma)
+        result = scsa.filter_with_optimal_h(noisy, curvature_weight = 2.0,h_range = [0.2,5])
+        results[gmma] = {
             'h_optimal': result.optimal_h,
             'mse': result.metrics['mse'],
             'psnr': result.metrics['psnr']
         }
-        print(f"γ={gamma:.1f}: h_opt={result.optimal_h:.2f}, "
+        print(f"γ={gmma:.1f}: h_opt={result.optimal_h:.2f}, "
               f"MSE={result.metrics['mse']:.4f}, PSNR={result.metrics['psnr']:.2f}")
     
     # Visualize parameter sweep
@@ -166,17 +183,22 @@ def example_adaptive_filtering():
     signal[(x >= 10) & (x < 15)] = 2  # Constant
     signal[(x >= 15) & (x < 20)] = 2 + 3 * np.sin(4 * np.pi * x[(x >= 15) & (x < 20)])  # Oscillations
     signal[x >= 20] = SignalGenerator.step_function(x[x >= 20] - 20, [(5, 3), (8, 1)])
-    
+    # Ensure signal is positive for SCSA
+    min_signal = None
+    if signal.min() < 0:
+        min_signal = signal.min()
+        signal = signal - min_signal
+    signal = signal.flatten()
     # Add noise
     noisy = add_noise(signal, snr_db=18, seed=42)
     
     # Standard SCSA
-    scsa_standard = SCSA1D(gamma=0.5)
-    result_standard = scsa_standard.filter_with_optimal_h(np.abs(noisy))
+    scsa_standard = SCSA1D(gmma=0.5)
+    result_standard = scsa_standard.filter_with_optimal_h(noisy, curvature_weight = 2.0,h_range = [0.2,5])
     
     # Adaptive SCSA
-    scsa_adaptive = AdaptiveSCSA(base_gamma=0.5)
-    result_adaptive = scsa_adaptive.denoise(np.abs(noisy), adapt_h=True, adapt_gamma=True)
+    scsa_adaptive = AdaptiveSCSA(base_gmma=0.5)
+    result_adaptive = scsa_adaptive.denoise(noisy, adapt_h=True, adapt_gmma=True)
     
     # Compare results
     print("\nStandard SCSA:")
@@ -185,7 +207,7 @@ def example_adaptive_filtering():
     print(f"  MSE: {result_standard.metrics['mse']:.6f}")
     
     print("\nAdaptive SCSA:")
-    print(f"  Adapted γ: {scsa_adaptive.scsa1d.gamma:.3f}")
+    print(f"  Adapted γ: {scsa_adaptive.scsa1d.gmma:.3f}")
     print(f"  Optimal h: {result_adaptive.optimal_h:.3f}")
     print(f"  MSE: {result_adaptive.metrics['mse']:.6f}")
     
