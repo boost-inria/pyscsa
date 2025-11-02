@@ -42,8 +42,8 @@ def example_basic_2d_reconstruction():
     noisy = add_noise(image, snr_db=15, seed=42)
     
     # Reconstruct
-    scsa = SCSA2D(gamma=2.0)
-    result = scsa.reconstruct(np.abs(noisy), h=5.0)
+    scsa = SCSA2D(gmma=2.0)
+    result = scsa.reconstruct(noisy, h=2.0)
     
     # Metrics
     metrics = QualityMetrics.compute_all(image, result.reconstructed)
@@ -79,11 +79,11 @@ def example_windowed_processing():
     image = generate_test_image(200, 'rings')
     noisy = add_noise(image, snr_db=12, seed=42)
     
-    scsa = SCSA2D(gamma=2.0)
+    scsa = SCSA2D(gmma=2.0)
     
     # Standard processing
     print("\nStandard SCSA processing...")
-    result_standard = scsa.reconstruct(np.abs(noisy), h=8.0)
+    result_standard = scsa.reconstruct(noisy, h=2.0)
     
     # Windowed processing with different window sizes
     window_sizes = [8, 16, 32]
@@ -92,7 +92,7 @@ def example_windowed_processing():
     for ws in window_sizes:
         print(f"Windowed SCSA (window={ws})...")
         reconstructed = scsa.reconstruct_windowed(
-            np.abs(noisy), h=8.0, window_size=ws, stride=ws//2
+            noisy, h=2.0, window_size=ws, stride=ws//2
         )
         results_windowed[ws] = reconstructed
     
@@ -140,7 +140,7 @@ def example_different_patterns():
     print("=" * 50)
     
     patterns = ['gaussian', 'checkerboard', 'rings', 'gradient']
-    scsa = SCSA2D(gamma=2.0)
+    scsa = SCSA2D(gmma=2.0)
     viz = SCSAVisualizer()
     
     fig, axes = plt.subplots(len(patterns), 4, figsize=(16, 4*len(patterns)))
@@ -151,7 +151,7 @@ def example_different_patterns():
         noisy = add_noise(image, snr_db=15, seed=42)
         
         # Reconstruct
-        denoised = scsa.denoise(np.abs(noisy), method='windowed', 
+        denoised = scsa.denoise(noisy, method='windowed', 
                                window_size=10, h=5.0)
         
         # Metrics
@@ -205,12 +205,12 @@ def example_multiscale_processing():
     noisy = add_noise(image, snr_db=10, seed=42)
     
     # Standard SCSA
-    scsa = SCSA2D(gamma=2.0)
-    result_standard = scsa.reconstruct(np.abs(noisy), h=8.0)
+    scsa = SCSA2D(gmma=2.0)
+    result_standard = scsa.reconstruct(noisy, h=8.0)
     
     # Multi-scale SCSA
-    ms_scsa = MultiScaleSCSA(scales=[1, 2, 4], gamma=2.0)
-    result_multiscale = ms_scsa.reconstruct(np.abs(noisy))
+    ms_scsa = MultiScaleSCSA(scales=[1, 2, 4], gmma=2.0)
+    result_multiscale = ms_scsa.reconstruct(noisy)
     
     # Metrics
     metrics_std = QualityMetrics.compute_all(image, result_standard.reconstructed)
@@ -272,7 +272,7 @@ if __name__ == "__main__":
     example_different_patterns()
     
     # Multi-scale processing
-    result4_std, result4_ms = example_multiscale_processing()
+    #result4_std, result4_ms = example_multiscale_processing()
     
     print("\n" + "=" * 50)
     print("All image examples completed successfully!")
