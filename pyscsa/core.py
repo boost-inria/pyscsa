@@ -479,8 +479,8 @@ class SCSA2D(SCSABase):
         
         return SCSAResult(
             reconstructed=reconstructed,
-            eigenvalues=np.array([kappa, rho], dtype=object),
-            eigenfunctions=np.array([phi_i, phi_j], dtype=object),
+            eigenvalues=[kappa, rho],
+            eigenfunctions=[phi_i, phi_j],
             num_eigenvalues=int(np.sum(Nh) + np.sum(Mh)),
             metrics=metrics
         )
