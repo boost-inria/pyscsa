@@ -13,30 +13,19 @@ class SCSARequest(BaseModel):
     noise: float = 0.1
     signal_type: str = "gaussian"
     method: str = "reconstruct"  # reconstruct, denoise, filter_optimal
-
-def ensure_positivity(signal: np.array):
-    # Ensure signal is positive for SCSA
-    min_signal = None
-    if signal.min() < 0:
-        min_signal = signal.min()
-        signal = signal - min_signal
-    return signal.flatten()
     
 def generate_signal(signal_type: str, x: np.ndarray):
     if signal_type == "gaussian":
         return np.exp(-x**2)
-        return ensure_positivity(np.exp(-x**2))
     elif signal_type == "sech":
         return 1 / np.cosh(x)
-        return ensure_positivity(1 / np.cosh(x))
     elif signal_type == "double_well":
         return -50 * (1/np.cosh(x-3))**2 - 50 * (1/np.cosh(x+3))**2
-        return ensure_positivity(-50 * (1/np.cosh(x-3))**2 - 50 * (1/np.cosh(x+3))**2)
     elif signal_type == "chirp":
         return np.sin(x**2)
     return np.exp(-x**2)
-        return ensure_positivty(np.sin(x**2))
-    return ensure_positivity(np.exp(-x**2))
+        return np.sin(x**2)
+    return np.exp(-x**2)
 
 @app.post("/api/scsa")
 async def run_scsa(req: SCSARequest):
@@ -44,12 +33,12 @@ async def run_scsa(req: SCSARequest):
     signal = generate_signal(req.signal_type, x)
     noisy = signal + req.noise * np.random.randn(len(signal))
     
-    noisy = ensure_positivity(signal + req.noise * np.random.randn(len(signal)))
+    noisy = signal + req.noise * np.random.randn(len(signal))
 
     scsa = SCSA1D(gmma=req.gamma)
 
     if req.method == "filter_optimal":
-        result = scsa.filter_with_optimal_h(np.abs(noisy))
+        result = scsa.filter_with_c_scsa(np.abs(noisy))
     elif req.method == "denoise":
         reconstructed = scsa.denoise(np.abs(noisy))
         result = scsa.reconstruct(np.abs(noisy), h=req.h)
