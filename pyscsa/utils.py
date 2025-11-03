@@ -243,6 +243,8 @@ def normalize_signal(signal: np.ndarray, method: str = 'minmax') -> np.ndarray:
         return (signal - signal.min()) / (signal.max() - signal.min() + 1e-10)
     elif method == 'zscore':
         return (signal - signal.mean()) / (signal.std() + 1e-10)
+    elif method == None:
+        return signal
     else:
         raise ValueError(f"Unknown normalization method: {method}")
         
