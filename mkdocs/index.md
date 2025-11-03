@@ -1,6 +1,6 @@
 # PySCSA - Semi-Classical Signal Analysis
 
-[![Tests](https://img.shields.io/badge/tests-47%20passed-brightgreen)](https://github.com/abdou1579/pyscsa)
+[![Tests](https://img.shields.io/badge/tests-47%20passed-brightgreen)](https://github.com/boost-inria/pyscsa)
 [![Python](https://img.shields.io/badge/python-3.7%2B-blue)](https://www.python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -58,7 +58,7 @@ pip install pyscsa
 Or from source:
 
 ```bash
-git clone https://github.com/abdou1579/pyscsa.git
+git clone https://github.com/boost-inria/pyscsa.git
 cd pyscsa
 pip install -e .
 ```
@@ -76,10 +76,10 @@ If you use PySCSA in your research:
   title = {PySCSA: Python Semi-Classical Signal Analysis Library},
   author = {boost inria},
   year = {2025},
-  url = {https://github.com/abdou1579/pyscsa}
+  url = {https://github.com/boost-inria/pyscsa}
 }
 ```
 
 ## License
 
-MIT License - see [LICENSE](https://github.com/abdou1579/pyscsa/blob/main/LICENSE) for details.
+MIT License - see [LICENSE](https://github.com/boost-inria/pyscsa/blob/main/LICENSE) for details.
