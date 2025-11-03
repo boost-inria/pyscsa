@@ -292,7 +292,7 @@ class SCSA1D(SCSABase):
         
 
         result = self.reconstruct(signal, best_h)
-        result.c_scsa = best_h
+        result.optimal_h = best_h
         return result
 
     def denoise(self, noisy_signal: np.ndarray, **kwargs) -> np.ndarray:
@@ -742,18 +742,18 @@ def example_1d_reconstruction():
     noisy_signal = add_noise(signal, snr_db=20, seed=42)
     
     # Create SCSA instance
-    scsa = SCSA1D(gamma=0.5)
+    scsa = SCSA1D(gmma=0.5)
     
     # Reconstruct with optimal h
     result = scsa.filter_with_c_scsa(np.abs(noisy_signal))
     
-    print(f"Optimal h: {result.c_scsa:.2f}")
+    print(f"Optimal h: {result.optimal_h:.2f}")
     print(f"Number of eigenvalues: {result.num_eigenvalues}")
     print(f"Metrics: {result.metrics}")
     
     # Visualize
     viz = SCSAVisualizer()
-    fig = viz.plot_1d_comparison(np.abs(noisy_signal), result.reconstructed)
+    fig = viz.plot_1d_comparison(noisy_signal, result.reconstructed)
     plt.show()
     
     return result
@@ -771,15 +771,15 @@ def example_2d_reconstruction():
     noisy_image = add_noise(image, snr_db=15, seed=42)
     
     # Create SCSA instance
-    scsa = SCSA2D(gamma=2.0)
+    scsa = SCSA2D(gmma=2.0)
     
     # Reconstruct
-    denoised = scsa.denoise(np.abs(noisy_image), method='windowed', 
+    denoised = scsa.denoise(noisy_image, method='windowed', 
                            window_size=8, h=5.0)
     
     # Visualize
     viz = SCSAVisualizer()
-    fig = viz.plot_2d_comparison(np.abs(noisy_image), denoised)
+    fig = viz.plot_2d_comparison(noisy_image, denoised)
     plt.show()
     
     return denoised
