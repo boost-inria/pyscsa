@@ -25,7 +25,7 @@ def generate_signal(signal_type: str, x: np.ndarray):
     elif signal_type == "chirp":
         t = np.arange(200)
         return chirp(x, t, f0 = 1, f1 = 10)
-    else 
+    else:
         return raise("No signal type was defined.")
         
 @app.post("/api/scsa")
