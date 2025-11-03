@@ -28,7 +28,7 @@
     </div>
     <div style="margin: 10px 0;">
         <label>Noise: <span id="noise-value">0.10</span></label>
-        <input type="range" id="noise-slider" min="0.05" max="0.3" step="0.05" value="0.10" style="width: 100%;">
+        <input type="range" id="noise-slider" min="0.05" max="1" step="0.05" value="0.10" style="width: 100%;">
     </div>
     <span id="loading" style="display:none;">⏳ Processing...</span>
 </div>
