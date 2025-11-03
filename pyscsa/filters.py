@@ -89,7 +89,7 @@ class AdaptiveSCSA:
         # Process based on dimensionality
         if signal.ndim == 1:
             if adapt_h:
-                return self.scsa1d.filter_with_optimal_h(signal)
+                return self.scsa1d.filter_with_c_scsa(signal)
             else:
                 return self.scsa1d.reconstruct(signal)
         else:
@@ -273,4 +273,4 @@ class RobustSCSA:
             cleaned_signal = signal
         
         # Apply SCSA
-        return self.scsa.filter_with_optimal_h(cleaned_signal)
+        return self.scsa.filter_with_c_scsa(cleaned_signal)
