@@ -39,13 +39,13 @@ async def run_scsa(req: SCSARequest):
     scsa = SCSA1D(gmma=req.gamma)
 
     if req.method == "filter_optimal":
-        result = scsa.filter_with_c_scsa(np.abs(noisy))
+        result = scsa.filter_with_c_scsa(noisy)
     elif req.method == "denoise":
-        reconstructed = scsa.denoise(np.abs(noisy))
-        result = scsa.reconstruct(np.abs(noisy), h=req.h)
+        reconstructed = scsa.denoise(noisy)
+        result = scsa.reconstruct(noisy, h=req.h)
         result.reconstructed = reconstructed
     else:
-        result = scsa.reconstruct(np.abs(noisy), h=req.h)
+        result = scsa.reconstruct(noisy, h=req.h)
 
     return {
         "x": x.tolist(),
