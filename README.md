@@ -47,7 +47,7 @@ noisy_signal = signal + 0.1 * np.random.randn(len(signal))
 
 # Denoise using SCSA
 scsa = SCSA1D(gmma=0.5)
-result = scsa.filter_with_optimal_h(np.abs(noisy_signal))
+result = scsa.filter_with_c_scsa(noisy_signal)
 
 print(f"Optimal h: {result.optimal_h:.2f}")
 print(f"MSE: {result.metrics['mse']:.6f}")
