@@ -745,7 +745,7 @@ def example_1d_reconstruction():
     scsa = SCSA1D(gmma=0.5)
     
     # Reconstruct with optimal h
-    result = scsa.filter_with_c_scsa(np.abs(noisy_signal))
+    result = scsa.filter_with_c_scsa(noisy_signal)
     
     print(f"Optimal h: {result.optimal_h:.2f}")
     print(f"Number of eigenvalues: {result.num_eigenvalues}")
