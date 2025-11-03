@@ -24,7 +24,7 @@
     </div>
     <div style="margin: 10px 0;">
         <label>h parameter: <span id="h-value">1.0</span></label>
-        <input type="range" id="h-slider" min="0.5" max="10.0" step="0.5" value="1.0" style="width: 100%;">
+        <input type="range" id="h-slider" min="0.001" max="10.0" step="0.005" value="1.0" style="width: 100%;">
     </div>
     <div style="margin: 10px 0;">
         <label>Noise: <span id="noise-value">0.10</span></label>
