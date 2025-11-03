@@ -23,10 +23,10 @@ def generate_signal(signal_type: str, x: np.ndarray):
     elif signal_type == "double_well":
         return -50 * (1/np.cosh(x-3))**2 - 50 * (1/np.cosh(x+3))**2
     elif signal_type == "chirp":
-        t = np.arange(200)
-        return chirp(x, t, f0 = 1, f1 = 10)
+        t = np.arange(len(x))
+        return chirp(t, f0=1, f1=10, t1=t[-1], method='linear')
     else:
-        return raise("No signal type was defined.")
+        raise ValueError(f"Unknown signal type: {signal_type}")
         
 @app.post("/api/scsa")
 async def run_scsa(req: SCSARequest):
