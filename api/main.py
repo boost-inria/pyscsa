@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import numpy as np
 from pyscsa import SCSA1D
+from scipy.signal import chirp
 
 app = FastAPI()
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
@@ -22,11 +23,11 @@ def generate_signal(signal_type: str, x: np.ndarray):
     elif signal_type == "double_well":
         return -50 * (1/np.cosh(x-3))**2 - 50 * (1/np.cosh(x+3))**2
     elif signal_type == "chirp":
-        return np.sin(x**2)
-    return np.exp(-x**2)
-        return np.sin(x**2)
-    return np.exp(-x**2)
-
+        t = np.arange(200)
+        return chirp(x, t, f0 = 1, f1 = 10)
+    else 
+        return raise("No signal type was defined.")
+        
 @app.post("/api/scsa")
 async def run_scsa(req: SCSARequest):
     x = np.linspace(-10, 10, 200)
