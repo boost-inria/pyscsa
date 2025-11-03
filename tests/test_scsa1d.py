@@ -42,7 +42,7 @@ class TestSCSA1D:
     def test_optimal_h_filtering(self, noisy_signal):
         """Test filtering with optimal h selection."""
         scsa = SCSA1D(gmma=0.5)
-        result = scsa.filter_with_optimal_h(noisy_signal)
+        result = scsa.filter_with_c_scsa(noisy_signal)
         
         assert result.optimal_h is not None
         assert result.optimal_h > 0
