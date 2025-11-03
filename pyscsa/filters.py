@@ -1,5 +1,6 @@
 """
 Advanced filtering methods based on SCSA.
+Under developpment.
 """
 
 import numpy as np
@@ -78,13 +79,6 @@ class AdaptiveSCSA:
                 self.scsa1d.gmma = gmma
             else:
                 self.scsa2d.gmma = gmma
-
-        # Ensure signal is positive for SCSA
-        min_signal = None
-        if signal.min() < 0:
-            min_signal = signal.min()
-            signal = signal - min_signal
-        signal = signal.flatten()
         
         # Process based on dimensionality
         if signal.ndim == 1:
