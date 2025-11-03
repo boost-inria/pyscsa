@@ -8,10 +8,9 @@ from typing import Literal
 
 app = FastAPI(title="SCSA API", version="1.0.0")
 
-# More restrictive CORS in production
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: Replace with specific origins in production
+    allow_origins=["*"],  
     allow_methods=["POST", "GET"],
     allow_headers=["*"],
     max_age=3600,
