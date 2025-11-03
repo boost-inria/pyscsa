@@ -38,7 +38,7 @@
 
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 <script>
-const API_URL = 'https://pyscsa-e8tx.onrender.com/api/scsa';
+const API_URL = 'https://pyscsa.onrender.com/api/scsa';
 
 async function runSCSA() {
     const gamma = parseFloat(document.getElementById('gamma-slider').value);
