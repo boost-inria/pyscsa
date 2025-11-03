@@ -33,8 +33,6 @@ async def run_scsa(req: SCSARequest):
     x = np.linspace(-10, 10, 200)
     signal = generate_signal(req.signal_type, x)
     noisy = signal + req.noise * np.random.randn(len(signal))
-    
-    noisy = signal + req.noise * np.random.randn(len(signal))
 
     scsa = SCSA1D(gmma=req.gamma)
 
