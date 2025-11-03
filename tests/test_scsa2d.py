@@ -34,7 +34,7 @@ class TestSCSA2D:
     def test_basic_reconstruction(self, simple_image):
         """Test basic image reconstruction."""
         scsa = SCSA2D(gmma=2.0)
-        result = scsa.reconstruct(simple_image, h=5.0)
+        result = scsa.reconstruct(simple_image, h=2.0)
         
         assert result.reconstructed is not None
         assert result.reconstructed.shape == simple_image.shape
@@ -44,7 +44,7 @@ class TestSCSA2D:
         """Test windowed reconstruction."""
         scsa = SCSA2D(gmma=2.0)
         reconstructed = scsa.reconstruct_windowed(
-            simple_image, h=5.0, window_size=10, stride=5
+            simple_image, h=2.0, window_size=10, stride=5
         )
         
         assert reconstructed is not None
@@ -56,21 +56,21 @@ class TestSCSA2D:
         
         # Test standard method
         denoised_standard = scsa.denoise(
-            np.abs(noisy_image), method='standard', h=5.0
+            noisy_image, method='standard', h=2.0
         )
         assert denoised_standard.shape == noisy_image.shape
         
         # Test windowed method
         denoised_windowed = scsa.denoise(
-            np.abs(noisy_image), method='windowed', 
-            h=5.0, window_size=10
+            noisy_image, method='windowed', 
+            h=2.0, window_size=10
         )
         assert denoised_windowed.shape == noisy_image.shape
     
     def test_metrics_computation(self, simple_image, noisy_image):
         """Test metrics computation for 2D."""
         scsa = SCSA2D()
-        result = scsa.reconstruct(np.abs(noisy_image), h=5.0)
+        result = scsa.reconstruct(noisy_image, h=2.0)
         
         assert result.metrics is not None
         assert 'mse' in result.metrics
