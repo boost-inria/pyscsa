@@ -31,7 +31,7 @@ class TestSCSAVisualizer:
         
         # Apply SCSA
         scsa = SCSA1D(gmma=0.5)
-        result = scsa.reconstruct(np.abs(noisy), h=1.0)
+        result = scsa.reconstruct(noisy, h=1.0)
         
         return {
             'x': x,
@@ -52,7 +52,7 @@ class TestSCSAVisualizer:
         
         # Apply SCSA
         scsa = SCSA2D(gmma=2.0)
-        result = scsa.reconstruct(image, h=5.0)
+        result = scsa.reconstruct(image, h=2.0)
         
         return {
             'original': image,
@@ -384,16 +384,16 @@ class TestVisualizationIntegration:
         
         # Apply SCSA
         scsa = SCSA1D(gmma=0.5)
-        result = scsa.filter_with_optimal_h(np.abs(noisy))
+        result = scsa.filter_with_c_scsa(noisy)
         
         # Create visualizations
         viz = SCSAVisualizer()
         
         # 1D comparison
         fig1 = viz.plot_1d_comparison(
-            np.abs(signal),
+            signal,
             result.reconstructed,
-            np.abs(noisy),
+            noisy,
             x_axis=x,
             metrics=result.metrics
         )
@@ -422,7 +422,7 @@ class TestVisualizationIntegration:
         
         # Apply SCSA
         scsa = SCSA2D(gmma=2.0)
-        denoised = scsa.denoise(np.abs(noisy), method='windowed', 
+        denoised = scsa.denoise(noisy, method='windowed', 
                                window_size=10, h=5.0)
         
         # Create visualizations
@@ -451,7 +451,7 @@ class TestVisualizationIntegration:
         
         for gmma in gammas:
             scsa = SCSA1D(gmma=gmma)
-            result = scsa.reconstruct(np.abs(noisy), h=1.0)
+            result = scsa.reconstruct(noisy, h=1.0)
             mse_values.append(result.metrics['mse'])
             psnr_values.append(result.metrics['psnr'])
         
