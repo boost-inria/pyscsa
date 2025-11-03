@@ -86,11 +86,11 @@ Examples:
         
         # Process
         if args.auto_h:
-            result = scsa.filter_with_optimal_h(np.abs(signal))
+            result = scsa.filter_with_c_scsa(signal)
             print(f"Optimal h: {result.optimal_h:.3f}")
         else:
             h = args.h if args.h else 1.0
-            result = scsa.reconstruct(np.abs(signal), h=h)
+            result = scsa.reconstruct(signal, h=h)
         
         # Save result
         np.save(args.output, result.reconstructed)
@@ -167,7 +167,7 @@ Examples:
             
             # Apply SCSA
             scsa = SCSA1D(gmma=0.5)
-            result = scsa.filter_with_optimal_h(np.abs(noisy_signal))
+            result = scsa.filter_with_c_scsa(noisy_signal)
             
             print(f"1D Results:")
             print(f"  Optimal h: {result.optimal_h:.3f}")
@@ -183,7 +183,7 @@ Examples:
             axes[0].set_title('1D Signal Denoising')
             axes[0].grid(True, alpha=0.3)
             
-            axes[1].plot(x, np.abs(np.abs(noisy_signal) - result.reconstructed))
+            axes[1].plot(x, np.abs(noisy_signal - result.reconstructed))
             axes[1].set_title('Reconstruction Error')
             axes[1].grid(True, alpha=0.3)
             
@@ -250,7 +250,7 @@ Examples:
             # Benchmark
             stats = analyzer.benchmark(
                 scsa.reconstruct,
-                np.abs(signal),
+                signal,
                 n_runs=args.runs,
                 h=1.0
             )
@@ -273,7 +273,7 @@ Examples:
             # Benchmark
             stats = analyzer.benchmark(
                 scsa.reconstruct,
-                np.abs(image),
+                image,
                 n_runs=args.runs,
                 h=5.0
             )
