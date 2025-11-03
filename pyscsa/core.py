@@ -29,7 +29,7 @@ class SCSAResult:
     eigenvalues: np.ndarray
     eigenfunctions: np.ndarray
     num_eigenvalues: int
-    optimal_h: Optional[float] = None
+    c_scsa: Optional[float] = None
     metrics: Optional[dict] = None
 
 
@@ -233,7 +233,7 @@ class SCSA1D(SCSABase):
             metrics=metrics
         )
     
-    def filter_with_optimal_h(self, signal: np.ndarray, 
+    def filter_with_c_scsa(self, signal: np.ndarray, 
                             curvature_weight: float = 4.0,
                             h_range: Optional[Tuple[float, float]] = None) -> SCSAResult:
         """
@@ -253,12 +253,7 @@ class SCSA1D(SCSABase):
         SCSAResult
             Object containing filtered signal and optimal parameters
         """
-        min_signal = None
-        if signal.min() < 0:
-            min_signal = signal.min()
-            print("Signal min value:", min_signal)
-            signal -= min_signal
-
+                                
         # Determine h range
         if h_range is None:
             h_min = np.sqrt(signal.max() / np.pi)
@@ -271,8 +266,6 @@ class SCSA1D(SCSABase):
         best_h = h_values[0]
         print("Optimizing h parameter in the range:", h_values[0], "to", h_values[-1])
         #original signal for fair comparison in the cost function
-        if min_signal is not None:
-            signal += min_signal
         # Grid search for optimal h
         for h in h_values:
             result = self.reconstruct(signal, h)
@@ -299,7 +292,7 @@ class SCSA1D(SCSABase):
         
 
         result = self.reconstruct(signal, best_h)
-        result.optimal_h = best_h
+        result.c_scsa = best_h
         return result
 
     def denoise(self, noisy_signal: np.ndarray, **kwargs) -> np.ndarray:
@@ -311,14 +304,14 @@ class SCSA1D(SCSABase):
         noisy_signal : np.ndarray
             Input noisy signal
         **kwargs
-            Additional parameters passed to filter_with_optimal_h
+            Additional parameters passed to filter_with_c_scsa
             
         Returns
         -------
         np.ndarray
             Denoised signal
         """
-        result = self.filter_with_optimal_h(noisy_signal, **kwargs)
+        result = self.filter_with_c_scsa(noisy_signal, **kwargs)
         return result.reconstructed
 
 
@@ -752,9 +745,9 @@ def example_1d_reconstruction():
     scsa = SCSA1D(gamma=0.5)
     
     # Reconstruct with optimal h
-    result = scsa.filter_with_optimal_h(np.abs(noisy_signal))
+    result = scsa.filter_with_c_scsa(np.abs(noisy_signal))
     
-    print(f"Optimal h: {result.optimal_h:.2f}")
+    print(f"Optimal h: {result.c_scsa:.2f}")
     print(f"Number of eigenvalues: {result.num_eigenvalues}")
     print(f"Metrics: {result.metrics}")
     
