@@ -16,7 +16,7 @@ setup(
     description="Semi-Classical Signal Analysis for signal and image processing",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/pyscsa",
+    url="https://github.com/boost-inria/pyscsa",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 4 - Beta",
