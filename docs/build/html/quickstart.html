@@ -107,7 +107,7 @@
 
 <span class="c1"># Apply SCSA denoising</span>
 <span class="n">scsa</span> <span class="o">=</span> <span class="n">SCSA1D</span><span class="p">(</span><span class="n">gmma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">filter_with_optimal_h</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noisy</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">filter_with_c_scsa</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noisy</span><span class="p">))</span>
 
 <span class="c1"># View results</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimal h: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">optimal_h</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -175,7 +175,7 @@
 <span class="n">noisy</span> <span class="o">=</span> <span class="n">signal</span> <span class="o">+</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">signal</span><span class="p">))</span>
 
 <span class="n">scsa</span> <span class="o">=</span> <span class="n">SCSA1D</span><span class="p">(</span><span class="n">gmma</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">filter_with_optimal_h</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noisy</span><span class="p">))</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">filter_with_c_scsa</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noisy</span><span class="p">))</span>
 
 <span class="c1"># Create visualizations</span>
 <span class="n">viz</span> <span class="o">=</span> <span class="n">SCSAVisualizer</span><span class="p">()</span>
