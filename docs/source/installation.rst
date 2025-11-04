@@ -28,7 +28,7 @@ To install the latest development version:
 
 .. code-block:: bash
 
-   git clone https://github.com/abdou1579/pyscsa.git
+   git clone https://github.com/boost-inria/pyscsa.git
    cd pyscsa
    pip install -e .
 
@@ -39,7 +39,7 @@ If you want to contribute or run tests:
 
 .. code-block:: bash
 
-   git clone https://github.com/abdou1579/pyscsa.git
+   git clone https://github.com/boost-inria/pyscsa.git
    cd pyscsa
    pip install -e ".[dev]"
 
