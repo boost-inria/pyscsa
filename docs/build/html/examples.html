@@ -107,7 +107,7 @@
 
 <span class="k">for</span> <span class="n">gmma</span> <span class="ow">in</span> <span class="n">gammas</span><span class="p">:</span>
     <span class="n">scsa</span> <span class="o">=</span> <span class="n">SCSA1D</span><span class="p">(</span><span class="n">gmma</span><span class="o">=</span><span class="n">gmma</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">noisy</span><span class="p">),</span> <span class="n">h</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">scsa</span><span class="o">.</span><span class="n">reconstruct</span><span class="p">(</span><span class="n">noisy</span><span class="p">,</span> <span class="n">h</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
     <span class="n">mse_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;mse&#39;</span><span class="p">])</span>
     <span class="n">psnr_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;psnr&#39;</span><span class="p">])</span>
 
