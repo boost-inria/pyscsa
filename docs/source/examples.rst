@@ -25,7 +25,7 @@ Parameter Sweep Analysis
    
    for gmma in gammas:
        scsa = SCSA1D(gmma=gmma)
-       result = scsa.reconstruct(np.abs(noisy), h=1.0)
+       result = scsa.reconstruct(noisy, h=1.0)
        mse_values.append(result.metrics['mse'])
        psnr_values.append(result.metrics['psnr'])
    
