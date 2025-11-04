@@ -23,7 +23,7 @@ Denoising a Simple Signal
    
    # Apply SCSA denoising
    scsa = SCSA1D(gmma=0.5)
-   result = scsa.filter_with_optimal_h(np.abs(noisy))
+   result = scsa.filter_with_c_scsa(noisy)
    
    # View results
    print(f"Optimal h: {result.optimal_h:.2f}")
@@ -93,12 +93,12 @@ Using Visualization Tools
    noisy = signal + 0.1 * np.random.randn(len(signal))
    
    scsa = SCSA1D(gmma=0.5)
-   result = scsa.filter_with_optimal_h(np.abs(noisy))
+   result = scsa.filter_with_optimal_h(noisy)
    
    # Create visualizations
    viz = SCSAVisualizer()
    fig = viz.plot_1d_comparison(
-       np.abs(signal),
+       signal,
        result.reconstructed,
        title="SCSA Signal Reconstruction"
    )
