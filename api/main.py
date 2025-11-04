@@ -6,7 +6,7 @@ from pyscsa import SCSA1D
 from scipy.signal import chirp
 
 app = FastAPI()
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=["https://pyscsa.readthedocs.io"], allow_methods=["*"], allow_headers=["*"])
 
 class SCSARequest(BaseModel):
     gamma: float = 0.5
