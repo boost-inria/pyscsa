@@ -18,7 +18,7 @@ pip install pyscsa
 ## Install from source
 
 ```bash
-git clone https://github.com/abdou1579/pyscsa.git
+git clone https://github.com/boost-inria/pyscsa.git
 cd pyscsa
 pip install -e .
 ```
