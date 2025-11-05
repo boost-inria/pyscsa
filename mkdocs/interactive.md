@@ -14,7 +14,7 @@
         <label>Method:</label>
         <select id="method" style="width: 100%; padding: 5px;">
             <option value="reconstruct">Reconstruct (manual h)</option>
-            <option value="filter_optimal">Filter with Optimal h</option>
+            <option value="filter_optimal">Filter with C-SCSA</option>
             <option value="denoise">Denoise</option>
         </select>
     </div>
