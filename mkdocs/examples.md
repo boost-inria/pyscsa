@@ -21,7 +21,7 @@ psnr_values = []
 
 for gmma in gammas:
     scsa = SCSA1D(gmma=gmma)
-    result = scsa.reconstruct(np.abs(noisy), h=1.0)
+    result = scsa.reconstruct(noisy, h=1.0)
     mse_values.append(result.metrics['mse'])
     psnr_values.append(result.metrics['psnr'])
 
@@ -58,7 +58,7 @@ fig, axes = plt.subplots(2, 2, figsize=(14, 10))
 for idx, gmma in enumerate([0.1, 0.5, 1.0, 2.0]):
     ax = axes[idx // 2, idx % 2]
     scsa = SCSA1D(gmma=gmma)
-    result = scsa.filter_with_optimal_h(np.abs(noisy))
+    result = scsa.filter_with_c_scsa(noisy)
     
     ax.plot(x, signal, 'k-', label='Original', linewidth=2)
     ax.plot(x, noisy, 'gray', alpha=0.3, label='Noisy')
@@ -88,7 +88,7 @@ noisy_ecg = ecg + 0.1 * np.random.randn(len(t))
 
 # Denoise
 scsa = SCSA1D(gmma=0.3)
-result = scsa.filter_with_optimal_h(np.abs(noisy_ecg))
+result = scsa.filter_with_c_scsa(noisy_ecg)
 
 # Visualize
 viz = SCSAVisualizer()
@@ -230,7 +230,7 @@ results = []
 
 for name, signal in signals.items():
     noisy = signal + 0.1 * np.random.randn(len(signal))
-    result = scsa.filter_with_optimal_h(np.abs(noisy))
+    result = scsa.filter_with_c_scsa(noisy)
     
     results.append({
         'signal': name,
@@ -265,7 +265,7 @@ signal = custom_chirp(x)
 noisy = signal + 0.1 * np.random.randn(len(signal))
 
 scsa = SCSA1D(gmma=0.5)
-result = scsa.filter_with_optimal_h(np.abs(noisy))
+result = scsa.filter_with_c_scsa(noisy)
 
 # Plot
 plt.figure(figsize=(12, 4))
