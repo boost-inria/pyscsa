@@ -51,7 +51,7 @@ print(f"PSNR: {result.metrics['psnr']:.2f} dB")
 
 ---
 
-#### `filter_with_optimal_h(signal, curvature_weight=4.0, h_range=None)`
+#### `filter_with_c_scsa(signal, curvature_weight=4.0, h_range=None)`
 
 Filter signal using C-SCSA with automatic h optimization.
 
@@ -68,7 +68,7 @@ Filter signal using C-SCSA with automatic h optimization.
 **Example:**
 
 ```python
-result = scsa.filter_with_optimal_h(noisy_signal)
+result = scsa.filter_with_c_scsa(noisy_signal)
 print(f"Optimal h: {result.optimal_h:.2f}")
 print(f"PSNR: {result.metrics['psnr']:.2f} dB")
 ```
@@ -82,7 +82,7 @@ Convenience method for signal denoising.
 **Parameters:**
 
 - `noisy_signal` (ndarray): Input noisy signal
-- `**kwargs`: Passed to `filter_with_optimal_h()`
+- `**kwargs`: Passed to `filter_with_c_scsa()`
 
 **Returns:**
 
@@ -135,7 +135,7 @@ reconstructed_image = result.reconstructed
 
 ---
 
-#### `reconstruct_windowed(image, h=10.0, window_size=4, stride=1, lambda_g=0)`
+#### `reconstruct_windowed(image, h=1.0, window_size=4, stride=1, lambda_g=0)`
 
 Reconstruct using windowed approach for large images.
 
@@ -156,7 +156,7 @@ Reconstruct using windowed approach for large images.
 ```python
 result = scsa.reconstruct_windowed(
     large_image, 
-    h=5.0, 
+    h=1.0, 
     window_size=16, 
     stride=8
 )
@@ -424,7 +424,7 @@ signal = np.exp(-x**2)
 noisy = add_noise(signal, snr_db=15, seed=42)
 
 scsa1d = SCSA1D(gmma=0.5)
-result = scsa1d.filter_with_optimal_h(noisy)
+result = scsa1d.filter_with_c_scsa(noisy)
 
 viz = SCSAVisualizer()
 fig = viz.plot_1d_comparison(signal, result.reconstructed, noisy)
