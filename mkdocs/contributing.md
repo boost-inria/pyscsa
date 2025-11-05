@@ -5,7 +5,7 @@ We welcome contributions!
 ## Development Setup
 
 ```bash
-git clone https://github.com/abdou1579/pyscsa.git
+git clone https://github.com/boost-inria/pyscsa.git
 cd pyscsa
 pip install -e ".[dev]"
 ```
