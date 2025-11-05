@@ -13,7 +13,7 @@ noisy = signal + 0.1 * np.random.randn(len(signal))
 
 # Denoise with automatic h optimization
 scsa = SCSA1D(gmma=0.5)
-result = scsa.filter_with_optimal_h(np.abs(noisy))
+result = scsa.filter_with_c_scsa(noisy)
 
 print(f"Optimal h: {result.optimal_h:.2f}")
 print(f"PSNR: {result.metrics['psnr']:.2f} dB")
@@ -46,7 +46,7 @@ import numpy as np
 # Create test image
 x = np.linspace(-5, 5, 100)
 y = np.linspace(-5, 5, 100)
-X, Y = np.meshgrid(x, y)
+X, Y = np.meshgrid(x, y)f
 image = np.exp(-(X**2 + Y**2) / 4)
 
 # Add noise
@@ -76,7 +76,7 @@ signal = np.exp(-x**2)
 noisy = signal + 0.1 * np.random.randn(len(signal))
 
 scsa = SCSA1D(gmma=0.5)
-result = scsa.filter_with_optimal_h(np.abs(noisy))
+result = scsa.filter_with_c_scsa(noisy)
 
 # Create visualizations
 viz = SCSAVisualizer(figsize=(12, 8))
@@ -112,7 +112,7 @@ data = np.loadtxt('signal.txt')
 
 # Process
 scsa = SCSA1D(gmma=0.5)
-result = scsa.filter_with_optimal_h(np.abs(data))
+result = scsa.filter_with_c_scsa(data)
 
 # Save results
 np.savetxt('denoised.txt', result.reconstructed)
