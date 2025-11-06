@@ -222,9 +222,9 @@ class SCSA1D(SCSABase):
         kappa = np.diag((lambda_g - selected_eigenvals)**self._gmma)
         
         # Normalize eigenfunctions
-        norms = np.diag(selected_eigenvecs.T @ selected_eigenvecs)
-        eigenfunctions_normalized = selected_eigenvecs / np.sqrt(norms)
-        #eigenfunctions_normalized = normalizing_l2(selected_eigenvecs)
+        #norms = np.diag(selected_eigenvecs.T @ selected_eigenvecs)
+        #eigenfunctions_normalized = selected_eigenvecs / np.sqrt(norms)
+        eigenfunctions_normalized = normalize(selected_eigenvecs, norm = 'l2', axis = 0)
         
         # Reconstruct signal
         reconstructed = -lambda_g + ((h / Lcl) * 
