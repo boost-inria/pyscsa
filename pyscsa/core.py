@@ -223,7 +223,7 @@ class SCSA1D(SCSABase):
         
         # Normalize eigenfunctions
         norms = np.diag(selected_eigenvecs.T @ selected_eigenvecs)
-        eigenfunctions_normalized = eigenfunctions / np.sqrt(norms)
+        eigenfunctions_normalized = selected_eigenvecs / np.sqrt(norms)
         #eigenfunctions_normalized = normalizing_l2(selected_eigenvecs)
         
         # Reconstruct signal
