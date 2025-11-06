@@ -42,7 +42,7 @@ def example_basic_2d_reconstruction():
     noisy = add_noise(image, snr_db=15, seed=42)
     
     # Reconstruct
-    scsa = SCSA2D(gmma=2.0)
+    scsa = SCSA2D(gmma=0.5)
     result = scsa.reconstruct(noisy, h=2.0)
     
     # Metrics
@@ -79,7 +79,7 @@ def example_windowed_processing():
     image = generate_test_image(200, 'rings')
     noisy = add_noise(image, snr_db=12, seed=42)
     
-    scsa = SCSA2D(gmma=2.0)
+    scsa = SCSA2D(gmma=0.5)
     
     # Standard processing
     print("\nStandard SCSA processing...")
