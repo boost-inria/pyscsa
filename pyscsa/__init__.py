@@ -26,6 +26,7 @@ from .core import (
     SCSAVisualizer,
     add_noise,
     normalize_signal,
+    normalizing_l2,
 )
 
 from .utils import (
