@@ -198,7 +198,7 @@ class SCSA1D(SCSABase):
         
         # Select eigenvalues below threshold
         mask = eigenvals < lambda_g
-        print(f"number of eigenvalues lower than zero: {np.sum(mask)}")
+        #print(f"number of eigenvalues lower than zero: {np.sum(mask)}")
         selected_eigenvals = eigenvals[mask]
         selected_eigenvecs = eigenvecs[:, mask]
         
