@@ -145,14 +145,6 @@ class SCSA1D(SCSABase):
         ).toarray()
         
         return (feh / fe)**2 * Ex
-
-    def normalizing_l2(self, eigenfunctions):
-
-        if eigenfunctions.shape[1] > eigenfunctions.shape[0]:
-            raise ValueError("Eigenfunctions can not be higher than the number of samples")
-        norms = np.diag(eigenfunctions.T @ eigenfunctions)
-        eigenfunctions_norm = eigenfunctions / np.sqrt(norms)
-        return eigenfuctions_norm
     
     def reconstruct(self, signal: np.ndarray, h: float = 1.0, 
                    lambda_g: Optional[float] = None) -> SCSAResult:
@@ -223,8 +215,6 @@ class SCSA1D(SCSABase):
         kappa = np.diag((lambda_g - selected_eigenvals)**self._gmma)
         
         # Normalize eigenfunctions
-        #norms = np.diag(selected_eigenvecs.T @ selected_eigenvecs)
-        #eigenfunctions_normalized = selected_eigenvecs / np.sqrt(norms)
         eigenfunctions_normalized = normalize(selected_eigenvecs, norm = 'l2', axis = 0)
         
         # Reconstruct signal
