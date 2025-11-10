@@ -1,6 +1,6 @@
 
 """
-Visualization utilities for SCSA library.
+Visualization utilities for pyscsa library.
 """
 
 import numpy as np
