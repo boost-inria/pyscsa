@@ -335,16 +335,22 @@ class TestGPUAvailability:
         assert isinstance(CUPY_AVAILABLE, bool)
     
     @pytest.mark.skipif(GPU_AVAILABLE, reason="Test only when GPU unavailable")
-    def test_gpu_unavailable_error(self):
-        """Test that appropriate error is raised when GPU unavailable."""
-        with pytest.raises(RuntimeError, match="CuPy not available"):
-            SCSA1D_GPU(gmma=0.5)
+    def test_gpu_classes_are_none(self):
+        """Test that GPU classes are None when GPU unavailable."""
+        assert SCSA1D_GPU is None
+        assert SCSA2D_GPU is None
     
-    @pytest.mark.skipif(GPU_AVAILABLE, reason="Test only when GPU unavailable")
-    def test_gpu_2d_unavailable_error(self):
-        """Test that appropriate error is raised for 2D when GPU unavailable."""
-        with pytest.raises(RuntimeError, match="CuPy not available"):
-            SCSA2D_GPU(gmma=0.5)
+    @pytest.mark.skipif(not GPU_AVAILABLE, reason="Test only when GPU available")
+    def test_gpu_classes_exist(self):
+        """Test that GPU classes exist when GPU available."""
+        assert SCSA1D_GPU is not None
+        assert SCSA2D_GPU is not None
+        
+        # Test that they can be instantiated
+        scsa1d = SCSA1D_GPU(gmma=0.5)
+        scsa2d = SCSA2D_GPU(gmma=2.0)
+        assert scsa1d is not None
+        assert scsa2d is not None
 
 
 if __name__ == "__main__":
