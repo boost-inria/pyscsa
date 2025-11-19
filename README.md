@@ -109,25 +109,9 @@ denoised = result.reconstructed
 print(f"PSNR: {result.metrics['psnr']:.2f} dB")
 ```
 
-### GPU Performance Benchmarking
-```python
-from pyscsa.scsa_gpu import benchmark_gpu_vs_cpu
-
-# Benchmark on different signal sizes
-for size in [1000, 5000, 10000]:
-    print(f"\nSignal size: {size}")
-    benchmark_gpu_vs_cpu(signal_length=size, num_runs=5)
-```
-
 ## GPU Acceleration
 
 PySCSA supports GPU acceleration through CuPy, providing significant speedup for large signals and images:
-
-| Signal Size | CPU Time | GPU Time | Speedup |
-|-------------|----------|----------|---------|
-| 1,000       | 0.15s    | 0.08s    | 1.9x    |
-| 5,000       | 2.1s     | 0.12s    | 17.5x   |
-| 10,000      | 8.3s     | 0.18s    | 46x     |
 
 **Requirements:**
 - NVIDIA GPU with CUDA support
