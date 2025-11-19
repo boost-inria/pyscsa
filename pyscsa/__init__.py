@@ -27,6 +27,8 @@ from .core import (
     add_noise,
     normalize_signal,
 )
+from .scsa_gpu import SCSA1D_GPU, SCSA2D_GPU, CUPY_AVAILABLE
+
 
 from .utils import (
     SignalGenerator,
@@ -53,6 +55,10 @@ __all__ = [
     'SCSABase',
     'SCSAResult',
     'SCSAVisualizer',
+    # GPU support classes
+    'SCSA1D_GPU',
+    'SCSA2D_GPU',
+    'CUPY_AVAILABLE',
     # Utility functions
     'add_noise',
     'normalize_signal',
