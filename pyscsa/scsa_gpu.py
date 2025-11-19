@@ -1,5 +1,5 @@
 """
-SCSA GPU Utilities 'under dev'
+SCSA GPU Utilities
 ==================
 GPU-accelerated versions of SCSA classes using CuPy.
 
@@ -20,7 +20,7 @@ except ImportError:
     CUPY_AVAILABLE = False
     cp = None
 
-from .core import SCSA1D, SCSA2D, SCSAResult, SCSABase
+from scsa import SCSA1D, SCSA2D, SCSAResult, SCSABase
 
 
 class GPUMixin:
