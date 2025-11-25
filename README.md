@@ -167,6 +167,17 @@ If you use this library in your research, please cite:
   url = {https://github.com/boost-inria/pyscsa}
 }
 ```
+```bibtex
+@misc{lalegkirati2010semiclassicalsignalanalysis,
+      title={Semi-classical signal analysis}, 
+      author={Taous-Meriem Laleg-Kirati and Emmanuelle Crépeau and Michel Sorine},
+      year={2010},
+      eprint={1007.0938},
+      archivePrefix={arXiv},
+      primaryClass={math-ph},
+      url={https://arxiv.org/abs/1007.0938}, 
+}
+```
 
 ## License
 
