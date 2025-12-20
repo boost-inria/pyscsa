@@ -4,7 +4,7 @@ SCSA (Semi-Classical Signal Analysis) Library
 A Python library for signal and image processing using Semi-Classical Signal Analysis.
 
 Author: boost
-License: MIT
+License: Inria
 Version: 1.0.0
 """
 
