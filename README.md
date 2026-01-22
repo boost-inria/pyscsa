@@ -2,7 +2,6 @@
 [![PyPI version](https://badge.fury.io/py/pyscsa.svg)](https://badge.fury.io/py/pyscsa)
 [![Documentation Status](https://readthedocs.org/projects/pyscsa/badge/?version=latest)](https://pyscsa.readthedocs.io/en/latest/?badge=latest)
 [![Tests](https://github.com/boost-inria/pyscsa/actions/workflows/tests.yml/badge.svg)](https://github.com/boost-inria/pyscsa/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Python library for signal and image processing using Semi-Classical Signal Analysis (SCSA).
 
