@@ -161,7 +161,7 @@ If you use this library in your research, please cite:
 ```bibtex
 @software{pyscsa,
   title = {PySCSA: Python Semi-Classical Signal Analysis Library},
-  author = {boost inria},
+  author = {A.GUIR, I.J.S Filho, J.M Vargas, Taous Meriem Laleg},
   year = {2025},
   url = {https://github.com/boost-inria/pyscsa}
 }
