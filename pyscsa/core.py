@@ -219,7 +219,7 @@ class SCSA1D(SCSABase):
         return (feh / fe)**2 * Ex
     
     def reconstruct(self, signal: np.ndarray, h: float = 1.0, 
-                   lambda_g: Optional[float] = None) -> SCSAResult:
+                   lambda_g: Optional[float] = None, D = None) -> SCSAResult:
         """
         Reconstruct a 1D signal using SCSA.
         
