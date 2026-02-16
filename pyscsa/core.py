@@ -68,7 +68,7 @@ def simp_integral(y: np.ndarray, dt: float) -> np.ndarray:
 class SCSABase:
     """Base class for SCSA implementations."""
     
-    def __init__(self, gmma: float = 0.5):
+    def __init__(self, gmma: float = 0.5,fe: float = 1.0):
         """
         Initialize SCSA base class.
         
@@ -76,8 +76,11 @@ class SCSABase:
         ----------
         gmma : float, default=0.5
             Gamma parameter for SCSA computation.
+        fe : float, default=1.0
+            Sampling parameter for discretization.
         """
         self._gmma = gmma
+        self.fe = fe
         self._validate_parameters()
     
     def _validate_parameters(self):
@@ -170,7 +173,7 @@ class SCSA1D(SCSABase):
     for 1D signal processing.
     """
     
-    def __init__(self, gmma: float = 0.5):
+    def __init__(self, gmma: float = 0.5, fe: float = 1.0):
         """
         Initialize 1D SCSA.
         
@@ -178,8 +181,12 @@ class SCSA1D(SCSABase):
         ----------
         gmma : float, default=0.5
             Gamma parameter for SCSA computation.
+        fe : float, default=1.0
+            Sampling parameter for discretization.
         """
-        super().__init__(gmma)
+        super().__init__(gmma, fe)
+
+
     
     def _create_delta_matrix(self, n: int, fe: float = 1.0) -> np.ndarray:
         """
@@ -219,7 +226,7 @@ class SCSA1D(SCSABase):
         return (feh / fe)**2 * Ex
     
     def reconstruct(self, signal: np.ndarray, h: float = 1.0, 
-                   lambda_g: Optional[float] = None, D = None) -> SCSAResult:
+                   lambda_g: Optional[float] = None) -> SCSAResult:
         """
         Reconstruct a 1D signal using SCSA.
         
@@ -256,7 +263,7 @@ class SCSA1D(SCSABase):
         
         # Create delta matrix
         n = len(signal)
-        D = self._create_delta_matrix(n)
+        D = self._create_delta_matrix(n, fe=self.fe)
         
         # SCSA computation
         Y = np.diag(signal)
@@ -288,7 +295,7 @@ class SCSA1D(SCSABase):
         
         # Normalize eigenfunctions using Simpson's rule integration
         eigenfunctions_normalized = self.normalize_eigenfunctions(
-            selected_eigenvecs, dx=1.0, method='scipy'
+            selected_eigenvecs, dx=self.fe, method='scipy'
         )
         
         # Reconstruct signal
