@@ -17,7 +17,6 @@ from scipy.special import gamma
 from scipy.integrate import simpson
 from scipy.sparse import diags
 from scipy.linalg import eigh
-from sklearn.preprocessing import normalize
 from sklearn.metrics import mean_squared_error
 import matplotlib.pyplot as plt
 
@@ -31,6 +30,39 @@ class SCSAResult:
     num_eigenvalues: int
     c_scsa: Optional[float] = None
     metrics: Optional[dict] = None
+
+
+def simp_integral(y: np.ndarray, dt: float) -> np.ndarray:
+    """
+    Compute numerical integral using composite Simpson's rule.
+    
+    Custom implementation that operates on a 2D array where each column
+    is integrated independently (suited for squared eigenfunctions).
+    
+    Parameters
+    ----------
+    y : np.ndarray
+        2D array of shape (n, k) where each column is a discrete function
+        to integrate. Each y_i represents a discrete sample at time i*dt.
+    dt : float
+        Sampling interval (spacing between discrete points).
+        
+    Returns
+    -------
+    np.ndarray
+        1D array of shape (k,) with the integral value for each column.
+    """
+    n = y.shape[0]
+    if n > 1:
+        I = (1 / 3) * (y[0, :] + y[1, :]) * dt
+        for i in range(2, n):
+            if i % 2 == 0:
+                I += (1 / 3) * (y[i - 1, :] + y[i, :]) * dt
+            else:
+                I += (y[i - 1, :] + (1 / 3) * y[i, :]) * dt
+    else:
+        I = y[0, :] * dt
+    return I
 
 
 class SCSABase:
@@ -52,6 +84,46 @@ class SCSABase:
         """Validate input parameters."""
         if self._gmma <= 0:
             raise ValueError("Gamma must be positive")
+    
+    @staticmethod
+    def normalize_eigenfunctions(eigenvecs: np.ndarray, dx: float = 1.0,
+                                 method: str = 'scipy') -> np.ndarray:
+        """
+        Normalize eigenfunctions so that integral(|psi|^2, dx) = 1 for each
+        eigenfunction, using Simpson's rule for numerical integration.
+        
+        Parameters
+        ----------
+        eigenvecs : np.ndarray
+            Matrix of eigenvectors, shape (n, k), where each column is an
+            eigenfunction.
+        dx : float, default=1.0
+            Sampling interval (spacing between discrete points).
+        method : str, default='scipy'
+            Integration method: 'scipy' uses scipy.integrate.simpson,
+            'custom' uses the manual composite Simpson implementation.
+            
+        Returns
+        -------
+        np.ndarray
+            Normalized eigenfunctions with the same shape as input.
+        """
+        psi_sq = eigenvecs ** 2
+        
+        if method == 'scipy':
+            # scipy.integrate.simpson along axis=0 (rows) for each column
+            norms_sq = simpson(psi_sq, dx=dx, axis=0)
+        elif method == 'custom':
+            norms_sq = simp_integral(psi_sq, dx)
+        else:
+            raise ValueError(f"Unknown integration method: {method}. "
+                             "Use 'scipy' or 'custom'.")
+        
+        norms = np.sqrt(np.abs(norms_sq))
+        # Avoid division by zero
+        norms = np.where(norms < 1e-15, 1.0, norms)
+        
+        return eigenvecs / norms[np.newaxis, :]
     
     @staticmethod
     def compute_metrics(original: np.ndarray, reconstructed: np.ndarray) -> dict:
@@ -214,8 +286,10 @@ class SCSA1D(SCSABase):
         # Compute kappa values
         kappa = np.diag((lambda_g - selected_eigenvals)**self._gmma)
         
-        # Normalize eigenfunctions
-        eigenfunctions_normalized = normalize(selected_eigenvecs, norm = 'l2', axis = 0)
+        # Normalize eigenfunctions using Simpson's rule integration
+        eigenfunctions_normalized = self.normalize_eigenfunctions(
+            selected_eigenvecs, dx=1.0, method='scipy'
+        )
         
         # Reconstruct signal
         reconstructed = -lambda_g + ((h / Lcl) * 
@@ -401,7 +475,7 @@ class SCSA2D(SCSABase):
         Nx = len(mu)
         
         if Nx > 0:
-            psi_x = np.apply_along_axis(lambda v: v / np.linalg.norm(v), 0, psi_x)
+            psi_x = self.normalize_eigenfunctions(psi_x, dx=1.0, method='scipy')
         
         return mu, psi_x, Nx
     
