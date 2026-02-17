@@ -123,7 +123,7 @@ class SCSABase:
         elif method == 'trapezoidal':
             psi = np.copy(eigenvecs)
             for i in range(psi.shape[1]):
-                norms_sq = np.sqrt(np.trapz(psi[:, i]**2, dx=dx))
+                norms_sq = np.sqrt(np.trapezoid(psi[:, i]**2, dx=dx))
                 psi[:, i] /= norms_sq
             return psi
         else:
