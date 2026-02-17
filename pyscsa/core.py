@@ -26,6 +26,7 @@ class SCSAResult:
     """Container for SCSA computation results."""
     reconstructed: np.ndarray
     eigenvalues: np.ndarray
+    kappas: np.ndarray
     eigenfunctions: np.ndarray
     num_eigenvalues: int
     c_scsa: Optional[float] = None
@@ -89,7 +90,8 @@ class SCSABase:
             raise ValueError("Gamma must be positive")
     
     @staticmethod
-    def normalize_eigenfunctions(eigenvecs: np.ndarray, dx: float = 1.0,
+
+    def normalize_eigenfunctions(self, eigenvecs: np.ndarray, dx: float = 1.0,
                                  method: str = 'scipy') -> np.ndarray:
         """
         Normalize eigenfunctions so that integral(|psi|^2, dx) = 1 for each
@@ -110,14 +112,22 @@ class SCSABase:
         -------
         np.ndarray
             Normalized eigenfunctions with the same shape as input.
-        """
-        psi_sq = eigenvecs ** 2
-        
+        """        
         if method == 'scipy':
             # scipy.integrate.simpson along axis=0 (rows) for each column
+            psi_sq = eigenvecs**2
             norms_sq = simpson(psi_sq, dx=dx, axis=0)
+            assert len(norms_sq) == eigenvecs.shape[1], "Expected norms shape to match number of eigenfunctions"
         elif method == 'custom':
+            psi_sq = eigenvecs**2
             norms_sq = simp_integral(psi_sq, dx)
+            assert len(norms_sq) == eigenvecs.shape[1], "Expected norms shape to match number of eigenfunctions"
+        elif method == 'trapezoidal':
+            psi = np.copy(eigenvecs)
+            for i in range(psi_sq.shape[1]):
+                norms_sq = np.sqrt(np.trapz(psi[:, i]**2, dx=dx))
+                psi[:, i] /= norms_sq
+            return psi
         else:
             raise ValueError(f"Unknown integration method: {method}. "
                              "Use 'scipy' or 'custom'.")
@@ -225,8 +235,9 @@ class SCSA1D(SCSABase):
         
         return (feh / fe)**2 * Ex
     
+
     def reconstruct(self, signal: np.ndarray, h: float = 1.0, 
-                   lambda_g: Optional[float] = None) -> SCSAResult:
+                   lambda_g: Optional[float] = None, method_norm: str = 'trapezoidal') -> SCSAResult:
         """
         Reconstruct a 1D signal using SCSA.
         
@@ -270,7 +281,7 @@ class SCSA1D(SCSABase):
         Lcl = (1 / (2 * np.pi**0.5)) * (gamma(self._gmma + 1) / gamma(self._gmma + 1.5))
         
         # Construct Schrödinger operator
-        SC = -(h**2 * D) - Y
+        SC = -(h**2)* D - Y
         
         # Eigenvalue decomposition
         eigenvals, eigenvecs = np.linalg.eigh(SC)
@@ -285,22 +296,22 @@ class SCSA1D(SCSABase):
             warnings.warn("No eigenvalues below threshold. Returning original signal.")
             return SCSAResult(
                 reconstructed=signal,
-                eigenvalues=np.array([]),
+                kappa=np.array([]),
                 eigenfunctions=np.array([]),
                 num_eigenvalues=0
             )
         
         # Compute kappa values
-        kappa = np.diag((lambda_g - selected_eigenvals)**self._gmma)
+        kappas = np.diag((lambda_g - selected_eigenvals)**self._gmma)
         
         # Normalize eigenfunctions using Simpson's rule integration
-        eigenfunctions_normalized = self.normalize_eigenfunctions(
-            selected_eigenvecs, dx=self.fe, method='scipy'
+        eigenfunctions_normalized = self.normalize_eigenfunctions(self,
+            selected_eigenvecs, dx=self.fe, method=method_norm
         )
         
         # Reconstruct signal
         reconstructed = -lambda_g + ((h / Lcl) * 
-                                     np.sum((eigenfunctions_normalized**2) @ kappa, axis=1)
+                                     np.sum((eigenfunctions_normalized**2) @ kappas, axis=1)
                                      )**(2 / (1 + 2*self._gmma))
         if  min_signal is not None:
             reconstructed += min_signal
@@ -309,7 +320,8 @@ class SCSA1D(SCSABase):
         
         return SCSAResult(
             reconstructed=reconstructed,
-            eigenvalues=kappa,
+            eigenvalues=eigenvals,
+            kappas=kappas,
             eigenfunctions=eigenfunctions_normalized,
             num_eigenvalues=len(selected_eigenvals),
             metrics=metrics
