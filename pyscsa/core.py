@@ -88,8 +88,6 @@ class SCSABase:
         """Validate input parameters."""
         if self._gmma <= 0:
             raise ValueError("Gamma must be positive")
-    
-    @staticmethod
 
     def normalize_eigenfunctions(self, eigenvecs: np.ndarray, dx: float = 1.0,
                                  method: str = 'scipy') -> np.ndarray:
@@ -124,7 +122,7 @@ class SCSABase:
             assert len(norms_sq) == eigenvecs.shape[1], "Expected norms shape to match number of eigenfunctions"
         elif method == 'trapezoidal':
             psi = np.copy(eigenvecs)
-            for i in range(psi_sq.shape[1]):
+            for i in range(psi.shape[1]):
                 norms_sq = np.sqrt(np.trapz(psi[:, i]**2, dx=dx))
                 psi[:, i] /= norms_sq
             return psi
@@ -305,8 +303,8 @@ class SCSA1D(SCSABase):
         kappas = np.diag((lambda_g - selected_eigenvals)**self._gmma)
         
         # Normalize eigenfunctions using Simpson's rule integration
-        eigenfunctions_normalized = self.normalize_eigenfunctions(self,
-            selected_eigenvecs, dx=self.fe, method=method_norm
+        eigenfunctions_normalized = self.normalize_eigenfunctions(selected_eigenvecs,
+                                                                  dx=self.fe, method=method_norm
         )
         
         # Reconstruct signal
