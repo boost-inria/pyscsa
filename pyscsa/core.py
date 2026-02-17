@@ -565,6 +565,7 @@ class SCSA2D(SCSABase):
         return SCSAResult(
             reconstructed=reconstructed,
             eigenvalues=[kappa, rho],
+            kappas=np.array([k for k_list in kappa if k_list is not None for k in k_list]),
             eigenfunctions=[phi_i, phi_j],
             num_eigenvalues=int(np.sum(Nh) + np.sum(Mh)),
             metrics=metrics
