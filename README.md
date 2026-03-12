@@ -93,7 +93,7 @@ pytest tests/ --cov=pyscsa --cov-report=html  # with coverage
 ```bibtex
 @software{pyscsa,
   title  = {PySCSA: Python Semi-Classical Signal Analysis Library},
-  author = {A. Guir and I.J.S. Filho and J.M. Vargas and T.M. Laleg},
+  author = {A. Guir, I.J.S. Filho, J.M. Vargas and T.M. Laleg},
   year   = {2025},
   url    = {https://github.com/boost-inria/pyscsa}
 }
@@ -102,7 +102,7 @@ pytest tests/ --cov=pyscsa --cov-report=html  # with coverage
 ```bibtex
 @misc{lalegkirati2010scsa,
   title         = {Semi-classical signal analysis},
-  author        = {Laleg-Kirati, Taous-Meriem and Crépeau, Emmanuelle and Sorine, Michel},
+  author        = {Laleg-Kirati Taous-Meriem ,Crépeau Emmanuelle and Sorine Michel},
   year          = {2010},
   eprint        = {1007.0938},
   archivePrefix = {arXiv},
