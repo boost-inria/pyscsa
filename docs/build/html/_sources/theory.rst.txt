@@ -38,4 +38,4 @@ The cutoff h determines reconstruction quality:
 * Small h: More smoothing
 * Large h: Less smoothing
 
-Use ``filter_with_optimal_h()`` for automatic optimization.
+Use ``filter_with_c_scsa()`` for automatic optimization.
