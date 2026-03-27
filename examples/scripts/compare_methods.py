@@ -40,8 +40,8 @@ def wavelet_denoise(signal, wavelet='db4', level=None):
 
 
 def savitzky_golay_denoise(signal, window_length=51, polyorder=3):
-    """Savitzky-Golay filter."""
-    from scipy.signal import savgol_filter
+    """Savitzky-Golay ."""
+    from scipy.signal import savgol_
     
     # Ensure window length is odd
     if window_length % 2 == 0:
@@ -50,11 +50,11 @@ def savitzky_golay_denoise(signal, window_length=51, polyorder=3):
     # Ensure window_length > polyorder
     window_length = max(window_length, polyorder + 2)
     
-    return savgol_filter(signal, window_length, polyorder)
+    return savgol_(signal, window_length, polyorder)
 
 
 def moving_average_denoise(signal, window_size=10):
-    """Simple moving average filter."""
+    """Simple moving average ."""
     return np.convolve(signal, np.ones(window_size)/window_size, mode='same')
 
 
@@ -95,7 +95,7 @@ def main():
             
             # SCSA
             scsa = SCSA1D(gmma=0.5)
-            scsa_result = scsa.filter_with_optimal_h(noisy)
+            scsa_result = scsa.filter_with_c_scsa(noisy)
             scsa_denoised = scsa_result.reconstructed
             
             # Median filter
