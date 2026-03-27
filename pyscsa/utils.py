@@ -5,7 +5,6 @@ Utility functions and classes for SCSA library.
 import numpy as np
 from typing import Optional, Tuple, Union
 from scipy import signal
-from scipy.stats import norm
 
 
 class SignalGenerator:
