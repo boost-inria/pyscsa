@@ -20,7 +20,7 @@ except ImportError:
     CUPY_AVAILABLE = False
     cp = None
 
-from .core import SCSA1D, SCSA2D, SCSAResult, SCSABase
+from .core import SCSA1D, SCSA2D, SCSAResult
 
 
 class GPUMixin:

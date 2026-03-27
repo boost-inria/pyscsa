@@ -3,7 +3,7 @@ Performance metrics and analysis tools.
 """
 
 import numpy as np
-from typing import Dict, List, Optional
+from typing import Dict, List
 from dataclasses import dataclass
 import time
 

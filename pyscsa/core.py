@@ -9,8 +9,7 @@ Version: 1.0.0
 """
 
 import numpy as np
-import pandas as pd
-from typing import Tuple, Optional, Union, List
+from typing import Tuple, Optional
 from dataclasses import dataclass
 import warnings
 from scipy.special import gamma

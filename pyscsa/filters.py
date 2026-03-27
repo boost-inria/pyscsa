@@ -4,7 +4,7 @@ Under developpment.
 """
 
 import numpy as np
-from typing import Optional, Tuple, Union
+from typing import Optional
 from .core import SCSA1D, SCSA2D, SCSAResult
 
 

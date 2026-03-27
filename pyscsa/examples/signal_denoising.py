@@ -4,7 +4,7 @@ Signal Denoising Examples using SCSA
 
 import numpy as np
 import matplotlib.pyplot as plt
-from pyscsa import SCSA1D, add_noise, normalize_signal
+from pyscsa import SCSA1D, add_noise
 from pyscsa.utils import SignalGenerator, NoiseGenerator
 from pyscsa.visualization import SCSAVisualizer
 from pyscsa.metrics import QualityMetrics
