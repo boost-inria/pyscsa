@@ -68,7 +68,7 @@ class BatchProcessor:
         print(f"  Processing 1D signal: {filename}")
         
         if self.config['h_1d'] is None:
-            result = self.scsa1d.filter_with_optimal_h(np.abs(signal))
+            result = self.scsa1d.filter_with_c_scsa(np.abs(signal))
         else:
             result = self.scsa1d.reconstruct(np.abs(signal), h=self.config['h_1d'])
         
