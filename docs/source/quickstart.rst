@@ -93,7 +93,7 @@ Using Visualization Tools
    noisy = signal + 0.1 * np.random.randn(len(signal))
    
    scsa = SCSA1D(gmma=0.5)
-   result = scsa.filter_with_optimal_h(noisy)
+   result = scsa.filter_with_c_scsa(noisy)
    
    # Create visualizations
    viz = SCSAVisualizer()
