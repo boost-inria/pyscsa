@@ -193,7 +193,7 @@ def adaptive_filtering(signal: Optional[np.ndarray] = None,
     
     # Standard SCSA
     scsa_standard = SCSA1D(gamma=0.5)
-    result_standard = scsa_standard.filter_with_optimal_h(np.abs(noisy))
+    result_standard = scsa_standard.filter_with_c_scsa(noisy)
     
     # Adaptive SCSA
     scsa_adaptive = AdaptiveSCSA(base_gamma=0.5)
@@ -400,7 +400,7 @@ def parameter_optimization(signal: Optional[np.ndarray] = None,
     
     for gamma in gammas:
         scsa = SCSA1D(gamma=gamma)
-        result = scsa.filter_with_optimal_h(np.abs(noisy))
+        result = scsa.filter_with_c_scsa(noisy)
         
         results.append({
             'gamma': gamma,
