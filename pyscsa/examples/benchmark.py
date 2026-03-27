@@ -226,7 +226,7 @@ def benchmark_noise_levels():
         
         for method_name, method in methods.items():
             if isinstance(method, SCSA1D):
-                result = method.filter_with_optimal_h(np.abs(noisy))
+                result = method.filter_with_c_scsa(np.abs(noisy))
             else:
                 result = method.denoise(np.abs(noisy))
             
@@ -330,7 +330,7 @@ def comprehensive_benchmark():
     # Methods to compare
     methods_to_test = [
         (SCSA1D(gmma=0.5).reconstruct, {'h': 1.0}),
-        (SCSA1D(gmma=0.5).filter_with_optimal_h, {}),
+        (SCSA1D(gmma=0.5).filter_with_c_scsa, {}),
         (AdaptiveSCSA(base_gmma=0.5).denoise, {'adapt_h': True}),
         (RobustSCSA(gmma=0.5).denoise, {'handle_outliers': True})
     ]
