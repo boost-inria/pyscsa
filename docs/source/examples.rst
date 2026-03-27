@@ -68,3 +68,7 @@ Large Image Processing
        window_size=16,
        h=5.0
    )
+
+   
+.. include:: ../../examples/notebooks/01_basic_1d_reconstruction.ipynb
+   :parser: myst_nb.docutils_
