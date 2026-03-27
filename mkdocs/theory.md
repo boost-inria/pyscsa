@@ -152,7 +152,7 @@ For large images:
 - **Noisy signals**: \(\gamma \in [0.3, 0.5]\), \(h \in [2.0, 5.0]\)
 - **Detail preservation**: \(\gamma \in [1.0, 2.0]\), \(h \in [0.5, 2.0]\)
 
-Use `filter_with_optimal_h()` for automatic selection.
+Use `filter_with_c_scsa()` for automatic selection.
 
 ## References
 
