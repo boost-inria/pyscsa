@@ -39,6 +39,7 @@ docs = [
     "sphinx>=4.0",
     "sphinx-rtd-theme>=0.5",
     "numpydoc>=1.1",
+    "myst-nb>=1.1",
 ]
 
 [tool.setuptools_scm]
