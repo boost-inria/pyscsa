@@ -70,7 +70,7 @@ def basic_1d_denoising(signal: Optional[np.ndarray] = None,
     
     # Apply SCSA
     scsa = SCSA1D(gamma=gamma)
-    result = scsa.filter_with_optimal_h(np.abs(noisy))
+    result = scsa.filter_with_c_scsa(noisy)
     
     # Compute metrics
     metrics = QualityMetrics.compute_all(np.abs(signal), result.reconstructed)
