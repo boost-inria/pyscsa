@@ -92,7 +92,7 @@ def example_multi_noise_comparison():
     
     for noise_name, noise in noise_types.items():
         noisy = signal + noise
-        result = scsa.filter_with_optimal_h(noisy, curvature_weight = 2.0,h_range = [0.2,5])
+        result = scsa.filter_with_c_scsa(noisy, curvature_weight = 2.0,h_range = [0.2,5])
         metrics = QualityMetrics.compute_all(signal, result.reconstructed)
         results[noise_name] = {
             'result': result,
