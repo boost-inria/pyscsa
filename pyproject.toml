@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Semi-Classical Signal Analysis for signal and image processing"
 readme = "README.md"
 requires-python = ">=3.7"
-license = {text = "MIT"}
+license = {text = "AGPL-3.0-only"}
 authors = [
     {name = "Boost", email = "boost@inria.fr"},
 ]
@@ -16,7 +16,7 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Signal Processing",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: AGPL-3.0-only",
     "Programming Language :: Python :: 3",
 ]
 dependencies = [
