@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,7 +8,8 @@ dynamic = ["version"]
 description = "Semi-Classical Signal Analysis for signal and image processing"
 readme = "README.md"
 requires-python = ">=3.7"
-license = {text = "AGPL-3.0-only"}
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
 authors = [
     {name = "Boost", email = "boost@inria.fr"},
 ]
@@ -16,8 +17,8 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Signal Processing",
-    "License :: OSI Approved :: AGPL-3.0-only",
     "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
 ]
 dependencies = [
     "numpy>=1.19.0",
@@ -26,6 +27,14 @@ dependencies = [
     "matplotlib>=3.2.0",
     "pandas>=1.1.0",
 ]
+
+[project.urls]
+Homepage = "https://github.com/boost-inria/pyscsa"
+Documentation = "https://pyscsa.readthedocs.io"
+Issues = "https://github.com/boost-inria/pyscsa/issues"
+
+[project.scripts]
+scsa-demo = "pyscsa.cli:main"
 
 [project.optional-dependencies]
 dev = [
@@ -41,7 +50,11 @@ docs = [
     "numpydoc>=1.1",
 ]
 
-[tool.setuptools_scm]
+[tool.setuptools.dynamic]
+version = {attr = "pyscsa.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["pyscsa*"]
 
 [tool.black]
 line-length = 88
