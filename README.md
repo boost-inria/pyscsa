@@ -14,7 +14,7 @@ SCSA treats a signal $y(x) \geq 0$ as the potential of a Schrödinger operator $
 
 $$y_h(x) = 4h \sum_{n=1}^{N_h} \kappa_n\, \psi_n^2(x)$$
 
-The atoms $\phi_n = 4h\,\psi_n^2$ are **non-negative**, **spatially localized**, and **signal-adaptive** — their shape is determined by $y$ itself with no fixed dictionary. The parameter $h$ controls resolution: smaller $h$ yields more atoms and finer detail; larger $h$ retains only dominant structures and suppresses noise.
+The atoms $\phi_n = \psi_n^2$ are **non-negative**, **spatially localized**, and **signal-adaptive** — their shape is determined by $y$ itself with no fixed dictionary. The parameter $h$ controls resolution: smaller $h$ yields more atoms and finer detail; larger $h$ retains only dominant structures and suppresses noise.
 
 **C-SCSA** automates the selection of $h$ by minimizing a data-driven cost balancing reconstruction fidelity against the geometric curvature of $y_h$ — a proxy for noise energy (Li & Laleg-Kirati, IET Signal Processing 2021). No knowledge of peak locations or noise level is required.
 
