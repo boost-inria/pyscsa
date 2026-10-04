@@ -14,7 +14,7 @@ Main Features:
     * Comprehensive visualization tools
 """
 
-__version__ = "1.1.0"
+__version__ = "1.1.1"
 __author__ = "BOOST"
 __email__ = "boost@inria.fr"
 
