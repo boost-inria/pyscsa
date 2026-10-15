@@ -2,7 +2,7 @@
 
 [![Tests](https://img.shields.io/badge/tests-47%20passed-brightgreen)](https://github.com/boost-inria/pyscsa)
 [![Python](https://img.shields.io/badge/python-3.7%2B-blue)](https://www.python.org)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
 **PySCSA** is a Python library for signal and image processing using Semi-Classical Signal Analysis (SCSA), a method inspired by quantum mechanics.
 
@@ -82,4 +82,4 @@ If you use PySCSA in your research:
 
 ## License
 
-MIT License - see [LICENSE](https://github.com/boost-inria/pyscsa/blob/main/LICENSE) for details.
+GNU Affero General Public License v3.0 (AGPL-3.0-only) - see [LICENSE](https://github.com/boost-inria/pyscsa/blob/main/LICENSE) for details.
