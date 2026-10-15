@@ -141,4 +141,4 @@ pytest tests/ --cov=pyscsa --cov-report=html  # with coverage
 
 ## License
 
-Inria License — see [LICENSE](LICENSE) for details.
+GNU Affero General Public License v3.0 (AGPL-3.0-only) — see [LICENSE](LICENSE) for details.
